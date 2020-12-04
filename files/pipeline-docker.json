@@ -1,0 +1,30 @@
+{
+  "description": "Extracts fields from AS log lines: time, thread, logging level, logger class, and the log message itself.",
+  "processors": [
+    {
+      "grok": {
+        "field": "log",
+        "patterns": [
+          "(?m)^(\\[DV\\]\\s*)?%{TIMESTAMP_ISO8601:application_time} %{HOSTNAME:node} %{WORD:servermode} \\[%{DATA:thread}\\] %{LOGLEVEL:level}\\s*%{JAVACLASS:logger} - ((\\[streamId=%{DATA:streamId}\\]\\s*)?(\\[internalId=%{DATA:internalId}\\]\\s*)?(\\[externalId=%{DATA:externalId}\\]\\s*)? )?%{GREEDYDATA:log}(\\s*\\[/DV\\])?$",
+          "(?m)^(\\[DV\\]\\s*)?%{TIMESTAMP_ISO8601:application_time} %{HOSTNAME:node} %{WORD:servermode} \\[%{DATA:thread}\\] %{LOGLEVEL:level}\\s*%{JAVACLASS:logger} - %{GREEDYDATA:log}(\\s*\\[/DV\\])?$",
+          "(?m)^(\\[DV\\]\\s*)?%{TIMESTAMP_ISO8601:application_time} %{LOGLEVEL:level} %{GREEDYDATA:log}(\\s*\\[/DV\\])?$",
+          "(?m)^(\\[DV\\]\\s*)?t=%{TIMESTAMP_ISO8601:application_time} lvl=%{LOGLEVEL:level} msg=\"%{GREEDYDATA:log}\" logger=%{WORD:logger} userId=%{INT:user_id} orgId=%{INT:org_id} uname=%{NOTSPACE:uname}? method=%{WORD:method} path=%{URIPATH:path} status=%{INT:status} remote_addr=%{IP:remote_addr} time_ms=%{INT:time_ms} size=%{INT:size} referer=%{GREEDYDATA:referer}?(\\s*\\[/DV\\])?$",
+          "(?m)^(\\e\\[\\d*m)*%{TIMESTAMP_ISO8601:application_time}\\s*(%{HOSTNAME:node}\\s*)?(%{WORD:servermode}\\s*)?\\[%{DATA:thread}\\]\\s*%{LOGLEVEL:level}\\s*%{JAVACLASS:logger}\\s*(-\\s*)?%{GREEDYDATA:log}$",
+          "^%{IP:remote_addr} - %{USERNAME:remote_user} \\[%{DATA:nginx_access_time}\\] \"%{WORD:method} %{URIPATH:path}(?:%{URIPARAM:params})? %{DATA:protocol}\" %{INT:status_code} %{NUMBER:bytes_sent} \"%{DATA:http_referrer}\" \"%{DATA:user_agent}\" \"%{DATA:http_x_forwarded_for}\"$",
+          "^%{DATA:nginx_log_time} \\[%{WORD:level}\\] %{NUMBER:pid}#%{DATA:thread}: %{GREEDYDATA:log}$"
+        ],
+        "trace_match": true,
+        "tag": "docker_grok",
+        "ignore_missing": true
+      }
+    }
+  ],
+  "on_failure": [
+    {
+      "set": {
+        "field": "error",
+        "value": "{{ _ingest.on_failure_message }}"
+      }
+    }
+  ]
+}

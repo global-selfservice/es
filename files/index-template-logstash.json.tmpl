@@ -1,0 +1,163 @@
+{
+  "order": 2147483647,
+  "index_patterns": [
+    "logstash-*"
+  ],
+  "settings": {
+    "index": {
+      "lifecycle": {
+        "name": "logstash-ilm"
+      },
+      "number_of_shards": "${shard_count}"
+    }
+  },
+  "mappings": {
+    "_meta": {},
+    "_source": {},
+    "properties": {
+      "date": {
+        "format": "strict_date_optional_time||epoch_millis||yyyy-MM-dd HH:mm:ss.SSS",
+        "index": true,
+        "ignore_malformed": false,
+        "store": false,
+        "type": "date",
+        "doc_values": true
+      },
+      "log_path": {
+        "eager_global_ordinals": false,
+        "norms": false,
+        "index": false,
+        "store": false,
+        "type": "keyword",
+        "split_queries_on_whitespace": false,
+        "doc_values": false
+      },
+      "method": {
+        "type": "keyword"
+      },
+      "level": {
+        "type": "keyword"
+      },
+      "logger": {
+        "type": "keyword"
+      },
+      "thread": {
+        "type": "keyword"
+      },
+      "servermode": {
+        "type": "keyword"
+      },
+      "node": {
+        "type": "keyword"
+      },
+      "@timestamp": {
+        "format": "strict_date_optional_time||epoch_millis||yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSZZZZZ",
+        "index": true,
+        "ignore_malformed": false,
+        "store": false,
+        "type": "date_nanos",
+        "doc_values": true
+      },
+      "gen_hash": {
+        "eager_global_ordinals": false,
+        "norms": false,
+        "index": false,
+        "store": false,
+        "type": "keyword",
+        "split_queries_on_whitespace": false,
+        "doc_values": true
+      },
+      "application_time": {
+        "format": "strict_date_optional_time||epoch_millis||yyyy-MM-dd HH:mm:ss.SSS",
+        "index": true,
+        "ignore_malformed": false,
+        "store": false,
+        "type": "date",
+        "doc_values": true
+      },
+      "attrs.service": {
+        "type": "keyword"
+      },
+      "time": {
+        "eager_global_ordinals": false,
+        "norms": false,
+        "index": false,
+        "store": false,
+        "type": "keyword",
+        "split_queries_on_whitespace": false,
+        "doc_values": true
+      },
+      "error": {
+        "type": "text"
+      },
+      "externalId": {
+        "type": "keyword"
+      },
+      "hostname": {
+        "type": "keyword"
+      },
+      "internalId": {
+        "type": "keyword"
+      },
+      "log": {
+        "type": "text"
+      },
+      "status": {
+        "type": "keyword"
+      },
+      "streamId": {
+        "type": "keyword"
+      },
+      "remote_addr": {
+        "type": "keyword"
+      },
+      "remote_user": {
+        "type": "keyword"
+      },
+      "path": {
+        "type": "keyword"
+      },
+      "params": {
+        "type": "text"
+      },
+      "protocol": {
+        "type": "keyword"
+      },
+      "status_code": {
+        "type": "integer"
+      },
+      "bytes_sent": {
+        "type": "long"
+      },
+      "http_referrer": {
+        "type": "keyword"
+      },
+      "user_agent": {
+        "type": "keyword"
+      },
+      "http_x_forwarded_for": {
+        "type": "keyword"
+      },
+      "pid": {
+        "type": "keyword"
+      },
+      "nginx_access_time": {
+        "format": "strict_date_optional_time||epoch_millis||dd/MMM/yyyy:HH:mm:ss",
+        "index": true,
+        "ignore_malformed": false,
+        "store": false,
+        "type": "date",
+        "doc_values": true
+      },
+      "nginx_log_time": {
+        "format": "strict_date_optional_time||epoch_millis||yyyy/MM/dd HH:mm:ss",
+        "index": true,
+        "ignore_malformed": false,
+        "store": false,
+        "type": "date",
+        "doc_values": true
+      }
+    }
+  },
+  "aliases": {}
+}

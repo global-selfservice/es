@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "index-pattern:logstash",
+    "_type": "_doc",
+    "_source": {
+      "index-pattern": {
+        "title": "logstash-*",
+        "timeFieldName": "@timestamp",
+        "fields": ${jsonencode(fields)}
+      },
+      "type": "index-pattern",
+      "references": [],
+      "migrationVersion": {
+        "index-pattern": "7.6.0"
+      }
+    }
+  }
+]
