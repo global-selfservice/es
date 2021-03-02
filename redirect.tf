@@ -1,5 +1,5 @@
 module "redirect" {
-  source = "github.com/global-devops-terraform/redirect?ref=v1.3.4"
+  source = "github.com/global-devops-terraform/redirect?ref=v1.4.0"
 
   cidr_blocks       = module.common.global_lan_cidr
   dns_name          = "kibana"
